@@ -1,7 +1,16 @@
 package com.lgcns.inspire_restjpa.user.domain.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.lgcns.inspire_restjpa.blog.domain.entity.BlogEntity;
+import com.lgcns.inspire_restjpa.comment.domain.entity.CommentEntity;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +19,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
+// @Table(name="INSPIRE_USER_TBL")
 @Builder
 @Setter
 @Getter
@@ -17,9 +27,23 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class UserEntity {
+
+    // @Id
+    // @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    // private Integer id;
     
     @Id
     private String email;
+
+    @Column(unique = true, nullable = false, length = 50)
     private String passwd;
+
+    @Column(nullable = false, length = 50)
     private String name;
+
+    @OneToMany(mappedBy = "author" , orphanRemoval = false, cascade = CascadeType.ALL)
+    private List<BlogEntity> blogs = new ArrayList<>();
+
+    // @OneToMany(mappedBy = "author" , orphanRemoval = false)
+    // private List<CommentEntity> comments = new ArrayList<>();
 }

@@ -3,22 +3,22 @@ package com.lgcns.inspire_restjpa;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lgcns.inspire_restjpa.user.domain.dto.UserRequestDTO;
 import com.lgcns.inspire_restjpa.user.domain.dto.UserResponseDTO;
 import com.lgcns.inspire_restjpa.user.domain.entity.UserEntity;
-import com.lgcns.inspire_restjpa.user.repository.UserReposiroty;
+import com.lgcns.inspire_restjpa.user.repository.UserRepository;
 
 @SpringBootTest
 public class UserTest {
     @Autowired
-    private UserReposiroty userReposiroty;
+    private UserRepository userRepository;
     
     @Test
     @Transactional
-    @Rollback(false)
+    @Commit
     public void insertUser() {
         // given
         UserRequestDTO request = UserRequestDTO.builder()
@@ -28,7 +28,7 @@ public class UserTest {
                                     .build();
 
         // when
-        UserEntity entity = userReposiroty.save(request.toEntity());
+        UserEntity entity = userRepository.save(request.toEntity());
         UserResponseDTO response = UserResponseDTO.fromEntity(entity);
         
         // then

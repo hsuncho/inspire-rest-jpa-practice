@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.lgcns.inspire_restjpa.user.domain.entity.UserEntity;
 
 @Repository
-public interface UserReposiroty extends JpaRepository<UserEntity, String>{
+public interface UserRepository extends JpaRepository<UserEntity, String>{
     
+    public UserEntity findByEmailAndPasswd(String email, String passwd);
 }
